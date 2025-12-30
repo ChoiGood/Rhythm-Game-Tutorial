@@ -1,4 +1,4 @@
-name: Unity CI (Build Only)
+name: Unity CI (Test Only)
 
 on:
   pull_request:
