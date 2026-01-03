@@ -3,12 +3,18 @@ using UnityEngine;
 public class NoteManager : MonoBehaviour
 {
 
-    public int bpm = 0; // beat per minute : 1ºĞ´ç ºñÆ® ¼ö
-    private double currentTime = 0d; // ³ëµå »ı¼ºÀ» À§ÇÑ ½Ã°£À» Ã¼Å©ÇÒ º¯¼ö  => ¸®µë °ÔÀÓ¿¡¼± ¾ÆÁÖ »ç¼ÒÇÑ ¿ÀÂ÷¶óµµ ¹®Á¦°¡ »ı±â±â ‹š¹®¿¡ float º¸´Ù ¿ÀÂ÷°¡ ´õ ÀÛÀº double ·Î ¼±¾ğ
+    public int bpm = 0; // beat per minute : 1ë¶„ë‹¹ ë¹„íŠ¸ ìˆ˜
+    private double currentTime = 0d; // ë…¸ë“œ ìƒì„±ì„ ìœ„í•œ ì‹œê°„ì„ ì²´í¬í•  ë³€ìˆ˜  => ë¦¬ë“¬ ê²Œì„ì—ì„  ì•„ì£¼ ì‚¬ì†Œí•œ ì˜¤ì°¨ë¼ë„ ë¬¸ì œê°€ ìƒê¸°ê¸° ë–„ë¬¸ì— float ë³´ë‹¤ ì˜¤ì°¨ê°€ ë” ì‘ì€ double ë¡œ ì„ ì–¸
 
-    [SerializeField] private Transform tfNoteAppear = null;  // ³ëÆ®°¡ »ı¼ºµÉ À§Ä¡ º¯¼ö
-    [SerializeField] private GameObject goNote = null;       // ³ëµå ÇÁ¸®ÆéÀ» ´ãÀ» º¯¼ö
+    [SerializeField] private Transform tfNoteAppear = null;  // ë…¸íŠ¸ê°€ ìƒì„±ë  ìœ„ì¹˜ ë³€ìˆ˜
+    [SerializeField] private GameObject goNote = null;       // ë…¸ë“œ í”„ë¦¬í©ì„ ë‹´ì„ ë³€ìˆ˜ 
 
+    TimingManager theTimingManager;
+
+    private void Start()
+    {
+        theTimingManager = GetComponent<TimingManager>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -19,6 +25,7 @@ public class NoteManager : MonoBehaviour
         {
             GameObject t_note = Instantiate(goNote, tfNoteAppear.position, Quaternion.identity);
             t_note.transform.SetParent(this.transform);
+            theTimingManager.boxNoteList.Add(t_note);
             currentTime -= 60d / bpm;
         }
     }
@@ -27,6 +34,7 @@ public class NoteManager : MonoBehaviour
     {
         if (collision.CompareTag("Note"))
         {
+            theTimingManager.boxNoteList.Remove(collision.gameObject);
             Destroy(collision.gameObject);
         }
     }
