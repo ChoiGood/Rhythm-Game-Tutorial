@@ -10,9 +10,11 @@ public class NoteManager : MonoBehaviour
     [SerializeField] private GameObject goNote = null;       // 노드 프리펩을 담을 변수 
 
     TimingManager theTimingManager;
+    EffectManager theEffectManager;
 
     private void Start()
     {
+        theEffectManager = FindObjectOfType<EffectManager>();
         theTimingManager = GetComponent<TimingManager>();
     }
 
@@ -34,6 +36,9 @@ public class NoteManager : MonoBehaviour
     {
         if (collision.CompareTag("Note"))
         {
+            // if (!collision.GetComponent<Note>().IsHit)  으로 사용해도 되게 만들어는 뒀는데, 로직은 튜토리얼과 같이 가는게 좋을거같아서 이렇게 둠
+            if (collision.GetComponent<Note>().GetNoteFlag())
+                theEffectManager.JudgementEffect(4);
             theTimingManager.boxNoteList.Remove(collision.gameObject);
             Destroy(collision.gameObject);
         }
