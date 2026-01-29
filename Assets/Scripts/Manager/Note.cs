@@ -1,17 +1,21 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Note : MonoBehaviour
 {
     public float noteSpeed = 400;
     public bool IsHit { get; private set; }
 
-    UnityEngine.UI.Image noteImage;
+    private Image noteImage;
 
-    private void Start()
+    private void OnEnable()
     {
-        noteImage = GetComponent<UnityEngine.UI.Image>();
-    }
+        if (noteImage == null)
+            noteImage = GetComponent<Image>();
 
+        noteImage.enabled = true;
+    }
+    
     void Update()
     {
         transform.localPosition += Vector3.right * noteSpeed * Time.deltaTime;

@@ -7,7 +7,6 @@ public class NoteManager : MonoBehaviour
     private double currentTime = 0d; // 노드 생성을 위한 시간을 체크할 변수  => 리듬 게임에선 아주 사소한 오차라도 문제가 생기기 떄문에 float 보다 오차가 더 작은 double 로 선언
 
     [SerializeField] private Transform tfNoteAppear = null;  // 노트가 생성될 위치 변수
-    [SerializeField] private GameObject goNote = null;       // 노드 프리펩을 담을 변수 
 
     TimingManager theTimingManager;
     EffectManager theEffectManager;
@@ -25,8 +24,10 @@ public class NoteManager : MonoBehaviour
 
         if (currentTime >= 60d / bpm)
         {
-            GameObject t_note = Instantiate(goNote, tfNoteAppear.position, Quaternion.identity);
-            t_note.transform.SetParent(this.transform);
+            GameObject t_note = ObjectPool.instance.noteQueue.Dequeue();
+            t_note.transform.position = tfNoteAppear.position;
+            t_note.SetActive(true);
+            
             theTimingManager.boxNoteList.Add(t_note);
             currentTime -= 60d / bpm;
         }
@@ -40,7 +41,9 @@ public class NoteManager : MonoBehaviour
             if (collision.GetComponent<Note>().GetNoteFlag())
                 theEffectManager.JudgementEffect(4);
             theTimingManager.boxNoteList.Remove(collision.gameObject);
-            Destroy(collision.gameObject);
+
+            ObjectPool.instance.noteQueue.Enqueue(collision.gameObject);
+            collision.gameObject.SetActive(false);
         }
     }
 }
