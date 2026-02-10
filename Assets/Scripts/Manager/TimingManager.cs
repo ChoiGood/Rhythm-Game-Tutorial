@@ -11,10 +11,12 @@ public class TimingManager : MonoBehaviour
     Vector2[] timingBoxs = null;                                            // 판정 범위의 최솟값(x), 최댓값(y)
 
     EffectManager theEffect;
+    ScoreManager theScoreManager;
 
     void Start()
     {
         theEffect = FindObjectOfType<EffectManager>();
+        theScoreManager = FindObjectOfType<ScoreManager>();
 
         // 타이밍 박스 설정
         timingBoxs = new Vector2[timingRect.Length];
@@ -43,6 +45,9 @@ public class TimingManager : MonoBehaviour
                     if (x < timingBoxs.Length - 1)
                         theEffect.NoteHitEffect();
                     theEffect.JudgementEffect(x);
+
+                    // 점수 증가
+                    theScoreManager.IncreaseScore(x);
                     return;
                 }
             }
