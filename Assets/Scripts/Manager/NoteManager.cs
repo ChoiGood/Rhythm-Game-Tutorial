@@ -10,11 +10,13 @@ public class NoteManager : MonoBehaviour
 
     TimingManager theTimingManager;
     EffectManager theEffectManager;
+    ComboManager theComboManager;
 
     private void Start()
     {
         theEffectManager = FindObjectOfType<EffectManager>();
         theTimingManager = GetComponent<TimingManager>();
+        theComboManager = FindObjectOfType<ComboManager>();
     }
 
     // Update is called once per frame
@@ -39,7 +41,10 @@ public class NoteManager : MonoBehaviour
         {
             // if (!collision.GetComponent<Note>().IsHit)  으로 사용해도 되게 만들어는 뒀는데, 로직은 튜토리얼과 같이 가는게 좋을거같아서 이렇게 둠
             if (collision.GetComponent<Note>().GetNoteFlag())
+            {
                 theEffectManager.JudgementEffect(4);
+                theComboManager.ResetCombo();
+            }
             theTimingManager.boxNoteList.Remove(collision.gameObject);
 
             ObjectPool.instance.noteQueue.Enqueue(collision.gameObject);
