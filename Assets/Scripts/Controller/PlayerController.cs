@@ -25,10 +25,12 @@ public class PlayerController : MonoBehaviour
     
 
     TimingManager theTimingManager;
+    CameraController theCam;
 
     private void Start()
     {
         theTimingManager = FindObjectOfType<TimingManager>();
+        theCam = FindObjectOfType<CameraController>();  
     }
     void Update()
     {
@@ -60,6 +62,7 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(MoveCo());
         StartCoroutine(SpinCo());
         StartCoroutine(RecoilCo());
+        StartCoroutine(theCam.ZoomCam());
     }
 
     IEnumerator MoveCo()
