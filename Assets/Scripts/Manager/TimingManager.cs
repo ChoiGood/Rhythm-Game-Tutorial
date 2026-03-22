@@ -5,7 +5,9 @@ using UnityEngine;
 public class TimingManager : MonoBehaviour
 {
     public List<GameObject> boxNoteList = new List<GameObject>();           // 생성된 노트를 담는 List  => 판정 범위에 있는 지 모든 노트를 비교해야한다.
-    
+
+    private int[] judgementRecord = new int[5];
+
     [SerializeField] private Transform Center = null;                       
     [SerializeField] private RectTransform[] timingRect = null;            // 판정 범위 (Perfect, Cool, Good, Bad) 판단를 위한 RectTransform 배열
     Vector2[] timingBoxs = null;                                            // 판정 범위의 최솟값(x), 최댓값(y)
@@ -55,7 +57,8 @@ public class TimingManager : MonoBehaviour
                     {
                         theScoreManager.IncreaseScore(x);  // 점수 증가
                         theStageManager.ShowNextPlate();    // 판때기 등장
-                        theEffect.JudgementEffect(x);
+                        theEffect.JudgementEffect(x);   // 판정 연출
+                        judgementRecord[x]++;   // 판정 기록
                     }
                     else
                     {
@@ -69,6 +72,7 @@ public class TimingManager : MonoBehaviour
 
         theComboManager.ResetCombo();
         theEffect.JudgementEffect(timingBoxs.Length);   // timingBoxs의 배열 개수는 4 이므로 length를 이용해도 됨!
+        MissRecord();
         return false;
     }
 
@@ -88,5 +92,15 @@ public class TimingManager : MonoBehaviour
         }
 
         return false;
+    }
+
+    public int[] GetJudgementRecord()
+    {
+        return judgementRecord;
+    }
+
+    public void MissRecord()
+    {
+        judgementRecord[4]++;   // 판정 기록
     }
 }
