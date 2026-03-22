@@ -7,6 +7,7 @@ public class ComboManager : MonoBehaviour
     [SerializeField] private Text textCombo;
 
     private int currentCombo = 0;
+    private int maxCombo = 0;
     public int CurrentCombo => currentCombo;
 
     private Animator comboUpAnimator;
@@ -24,6 +25,9 @@ public class ComboManager : MonoBehaviour
         currentCombo += p_num;
         textCombo.text = string.Format("{0:#,##0}", currentCombo);
 
+        if (maxCombo < currentCombo)
+            maxCombo = currentCombo;
+
         if (currentCombo > 2)
         {
             textCombo.gameObject.SetActive(true);
@@ -31,6 +35,11 @@ public class ComboManager : MonoBehaviour
 
             comboUpAnimator.SetTrigger(ComboUpHash);    
         }
+    }
+
+    public int GetCurrentCombo()
+    {
+        return currentCombo;
     }
 
     public void ResetCombo()
@@ -41,5 +50,8 @@ public class ComboManager : MonoBehaviour
         goComboImage.SetActive(false);
     }
 
-    
+    public int GetMaxCombo()
+    {
+        return maxCombo;
+    }
 }
