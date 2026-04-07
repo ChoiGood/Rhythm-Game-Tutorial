@@ -24,6 +24,8 @@ public class Result : MonoBehaviour
 
     public void ShowResult()
     {
+        AudioManager.instance.StopBGM();
+
         goUI.SetActive(true);
 
         for (int i = 0; i < txtCount.Length; i++)
@@ -48,5 +50,10 @@ public class Result : MonoBehaviour
         txtCoin.text = string.Format("{0:#,##0}", t_coin);
     }
 
-
+    public void BtnMainMenu()
+    {
+        goUI.SetActive(false);
+        GameManager.instance.MainMenu();
+        theCombo.ResetCombo();
+    }
 }
