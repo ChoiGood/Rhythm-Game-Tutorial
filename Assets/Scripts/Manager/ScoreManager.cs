@@ -22,6 +22,12 @@ public class ScoreManager : MonoBehaviour
         ResetScore();
     }
 
+    public void Initialized()
+    {
+        currentScore = 0;
+        textScore.text = "0";
+    }
+
     public void IncreaseScore(int judgementIndex)
     {
         // indxx 예외 처리 코드 (필요시 사용)
