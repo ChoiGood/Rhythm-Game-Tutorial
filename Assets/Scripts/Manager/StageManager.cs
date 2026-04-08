@@ -4,6 +4,7 @@ using UnityEngine;
 public class StageManager : MonoBehaviour
 {
     [SerializeField] private GameObject stage;
+    private GameObject currentStage;
     private Transform[] stagePlates;
 
     [SerializeField] private float offsetY = 3;
@@ -12,11 +13,18 @@ public class StageManager : MonoBehaviour
     private int stepCount = 0;
     private int totalPlateCount = 0;
 
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void RemoveStage()
     {
-        stagePlates = stage.GetComponent<Stage>().plates;
+        if (currentStage != null)
+            Destroy(currentStage);
+    }
+
+    public void SettingStage()
+    {
+        stepCount = 0;
+
+        currentStage = Instantiate(stage, Vector3.zero, Quaternion.identity);
+        stagePlates = currentStage.GetComponent<Stage>().plates;
         totalPlateCount = stagePlates.Length;
 
         for (int i = 0; i < totalPlateCount; i++)
@@ -24,8 +32,6 @@ public class StageManager : MonoBehaviour
             stagePlates[i].position = new Vector3(stagePlates[i].position.x,
                                                   stagePlates[i].position.y + offsetY,
                                                   stagePlates[i].position.z);
-
-
         }
 
     }
