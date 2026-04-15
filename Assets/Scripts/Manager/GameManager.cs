@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     StatusManager theStatus;
     PlayerController thePlayer;
     StageManager theStage;
+    NoteManager theNote;
+    [SerializeField] CenterFlame theMusic;
 
     private void Start()
     {
@@ -25,15 +27,18 @@ public class GameManager : MonoBehaviour
         theStatus = FindObjectOfType<StatusManager>();
         thePlayer = FindObjectOfType<PlayerController>();
         theStage = FindObjectOfType<StageManager>();    
+        theNote = FindObjectOfType<NoteManager>();
     }
 
-    public void GameStart()
+    public void GameStart(int p_songNum, int p_bpm)
     {
         for (int i = 0; i < goGameUI.Length; i++)
         {
             goGameUI[i].SetActive(true);
         }
 
+        theMusic.bgmName = "BGM" + p_songNum;
+        theNote.bpm = p_bpm;
         theStage.RemoveStage();
         theStage.SettingStage();
         theCombo.ResetCombo();
@@ -41,6 +46,8 @@ public class GameManager : MonoBehaviour
         theTiming.Initialized();
         theStatus.Initialized();
         thePlayer.Initialized();
+
+        AudioManager.instance.StopBGM();
 
         isStartGame = true;
     }
