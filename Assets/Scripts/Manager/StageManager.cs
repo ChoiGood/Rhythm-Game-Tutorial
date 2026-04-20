@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class StageManager : MonoBehaviour
 {
-    [SerializeField] private GameObject stage;
+    [SerializeField] private GameObject[] stageArray;
     private GameObject currentStage;
     private Transform[] stagePlates;
 
@@ -19,11 +19,11 @@ public class StageManager : MonoBehaviour
             Destroy(currentStage);
     }
 
-    public void SettingStage()
+    public void SettingStage(int p_songNum)
     {
         stepCount = 0;
 
-        currentStage = Instantiate(stage, Vector3.zero, Quaternion.identity);
+        currentStage = Instantiate(stageArray[p_songNum], Vector3.zero, Quaternion.identity);
         stagePlates = currentStage.GetComponent<Stage>().plates;
         totalPlateCount = stagePlates.Length;
 

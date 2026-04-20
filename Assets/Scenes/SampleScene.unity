@@ -4998,7 +4998,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2619692670f9f84e9b703e5dc16e0f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stage: {fileID: 2306206633793061579, guid: 66ab30ea22cfb5c46bb6e415a721a1f1, type: 3}
+  stageArray:
+  - {fileID: 2306206633793061579, guid: 66ab30ea22cfb5c46bb6e415a721a1f1, type: 3}
+  - {fileID: 9057035737002041086, guid: 3653649779b680245ad086d7123a92fd, type: 3}
+  - {fileID: 1751960292103236827, guid: d320591f027cf5a4a87d6221ddded4e0, type: 3}
   offsetY: -5
   plateSpeed: 10
 --- !u!1 &1202151819
